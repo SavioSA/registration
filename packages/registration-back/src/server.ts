@@ -1,11 +1,11 @@
 import express, { Router } from 'express';
-import { registrationController } from './controllers/registration';
+import { UsersController } from './controllers/users';
 
 const app = express();
 
 const route = Router()
 
-app.use('/registration', registrationController);
+app.use('/users', UsersController);
 
 app.use(route)
 
