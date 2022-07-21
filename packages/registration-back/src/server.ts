@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import { UsersController } from './controllers/users';
+import { UsersController } from './controllers/user';
 import dbConnection from './database/db-connection';
 
 
