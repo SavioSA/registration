@@ -1,13 +1,14 @@
 import { DataSource } from 'typeorm';
 
+
 export const connectionSource = new DataSource({
       migrationsTableName: 'migrations',
       type: 'mysql',
-      host: 'localhost',
-      port: 3307,
-      username: 'root',
-      password: '1234567',
-      database: 'registration',
+      port: 3306,
+      host: process.env.MYSQL_HOST,
+      username: process.env.MYSQL_USER,
+      password: process.env.MYSQL_ROOT_PASSWORD,
+      database:  process.env.MYSQL_DATABASE,
       logging: false,
       synchronize: false,
       name: 'default',
