@@ -1,9 +1,25 @@
 import express, { Router } from 'express';
 import { UsersController } from './controllers/users';
+import { connectionSource } from './database/ormconfig';
+
+connectionSource
+  .initialize()
+  .then(() => {
+      console.log("Data Source has been initialized!")
+  })
+  .catch((err) => {
+      console.error("Error during Data Source initialization:", err)
+  })
+
+
 
 const app = express();
 
 const route = Router()
+
+
+
+app.use(express.json())
 
 app.use('/users', UsersController);
 
