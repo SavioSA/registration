@@ -17,4 +17,4 @@ router.put('/', (req: Request, res: Response) => {
 router.delete('/', (req: Request, res: Response) => {
 });
 
-export const registrationController: Router = router
+export const UsersController: Router = router
