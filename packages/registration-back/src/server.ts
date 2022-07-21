@@ -1,19 +1,15 @@
 import express, { Router } from 'express';
-import { DataSource } from 'typeorm';
 import { UsersController } from './controllers/users';
-import { getConfig } from './database/ormconfig';
-const dbConnection = new DataSource(getConfig());
+import dbConnection from './database/db-connection';
 
-dbConnection
-  .initialize()
+
+dbConnection.initialize()
   .then(() => {
       console.log("Data Source has been initialized!")
   })
   .catch((err) => {
       console.error("Error during Data Source initialization:", err)
   })
-
-
 
 const app = express();
 

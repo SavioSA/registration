@@ -4,4 +4,4 @@ import { getConfig } from './ormconfig';
 const datasource = new DataSource(getConfig());
 
 datasource.initialize();
- export default datasource; 
+export default datasource;
