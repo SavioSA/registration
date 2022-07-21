@@ -1,15 +1,11 @@
-import express, { Request, Response, Router } from 'express';
-
+import express, { Router } from 'express';
+import { registrationController } from './controllers/registration';
 
 const app = express();
 
 const route = Router()
 
-app.use(express.json())
-
-route.get('/', (req: Request, res: Response) => {
-  res.json({ message: 'hello world with Typescript' })
-})
+app.use('/registration', registrationController);
 
 app.use(route)
 
