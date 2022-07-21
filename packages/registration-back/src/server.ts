@@ -1,8 +1,10 @@
 import express, { Router } from 'express';
+import { DataSource } from 'typeorm';
 import { UsersController } from './controllers/users';
-import { connectionSource } from './database/ormconfig';
+import { getConfig } from './database/ormconfig';
+const dbConnection = new DataSource(getConfig());
 
-connectionSource
+dbConnection
   .initialize()
   .then(() => {
       console.log("Data Source has been initialized!")
