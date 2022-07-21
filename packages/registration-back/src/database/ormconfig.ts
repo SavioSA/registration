@@ -14,7 +14,7 @@ export function getConfig() {
             logging: false,
             synchronize: false,
             name: 'default',
-            entities: ['src/**/**.entity{.ts,.js}'],
+            entities: ['src/**/**/**.entity{.ts,.js}'],
             migrations: ['src/database/migrations/**/*{.ts,.js}'],
             subscribers: ['src/database/subscriber/**/*{.ts,.js}'],
       } as DataSourceOptions;
