@@ -10,7 +10,7 @@ const userRepository = dbConnection.getRepository(User)
 
 router.get< {}, UserInterface[] | MessageInterface, {}, PaginationInterface >('/', async (req, res) => {
     try {
-      const { offset, page } = req.query;      
+      const { offset, page } = req.query;
       const take: number = isNaN(offset)? 0 : offset;
       let currentPage: number = isNaN(page)? 0 : page;
       currentPage = currentPage > 0 ? currentPage - 1 : currentPage;
@@ -24,7 +24,20 @@ router.get< {}, UserInterface[] | MessageInterface, {}, PaginationInterface >('/
     }
 });
 
-router.get('/:id', (req: Request, res: Response) => {
+router.get< { id: number }, UserInterface | MessageInterface, {}, {} >('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await userRepository.findOne({
+      where: { id }
+    });
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({msg: `There was an error with your request: User not found.`});
+    }
+  } catch (error) {
+    res.status(500).json({ msg: `There was an error with your request: ${error}` });
+  }
 });
 
 router.post<{}, MessageInterface, UserInterface >('/',
@@ -53,6 +66,7 @@ router.post<{}, MessageInterface, UserInterface >('/',
 });
 
 router.put('/', (req: Request, res: Response) => {
+  
 });
 
 router.delete('/', (req: Request, res: Response) => {
