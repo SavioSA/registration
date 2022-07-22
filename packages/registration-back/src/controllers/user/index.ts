@@ -1,4 +1,4 @@
-import { Request, Response, Router } from 'express';
+import { Router } from 'express';
 import { body, validationResult } from 'express-validator';
 import dbConnection from '../../database/db-connection';
 import { User } from '../../database/entities/user.entity';
@@ -95,7 +95,22 @@ router.put<{}, MessageInterface, UserInterface>('/',
     }
 });
 
-router.delete('/', (req: Request, res: Response) => {
+router.delete<{ id: number }, UserInterface | MessageInterface, {}, {}>('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userExists = await userRepository.findOne({
+      where: { id }
+    });
+    if (!userExists) {
+      res.status(404).json({msg: `There was an error with your request: User not found.`});
+    } else {
+      await userRepository.delete({ id });
+      res.status(200).json({ msg: 'User deleted successfully.' });
+    }
+
+  } catch (error) {
+      res.status(500).json({ msg: `There was an error with your request: ${error}` });
+  }
 });
 
 function setErrorValidationMessage(errors: { msg: string } []) {
