@@ -5,10 +5,9 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import UserList from "./components/UserList.vue";
-
+import UserList from "../components/UserList.vue";
 export default defineComponent({
-  name: "UserRegistration",
+  name: "UserListView",
   components: {
     UserList,
   },
@@ -22,6 +21,5 @@ export default defineComponent({
 section.list-section {
   display: flex;
   justify-content: center;
-  width: 100%;
 }
 </style>
