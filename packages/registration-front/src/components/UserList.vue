@@ -5,12 +5,15 @@
         <tr>
           <th class="text-left">Nome</th>
           <th class="text-left">Data de nascimento</th>
+          <th class="text-left">Opções</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in desserts" :key="item.name">
           <td>{{ item.name }}</td>
           <td>{{ item.calories }}</td>
+
+          <td><v-icon icon="fas fa-trash" /></td>
         </tr>
       </tbody>
     </v-table>
@@ -70,7 +73,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 section.main-section {
   width: 90%;
 }
