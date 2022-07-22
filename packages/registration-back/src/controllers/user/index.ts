@@ -8,21 +8,34 @@ import { UserInterface } from './interfaces/user.interface';
 const router: Router = Router();
 const userRepository = dbConnection.getRepository(User)
 
-router.get('/', (req: Request, res: Response) => {
+router.get< {}, UserInterface[] | MessageInterface, {}, {offset: number, page: number } >('/', async (req, res) => {
+    try {
+      const { offset, page } = req.query;      
+      const take: number = isNaN(offset)? 0 : offset;
+      let currentPage: number = isNaN(page)? 0 : page;
+      currentPage = currentPage > 0 ? currentPage - 1 : currentPage;
+      const users = await userRepository.find({
+        take,
+        skip: currentPage * take
+      });
+      res.json(users);
+    } catch (error) {
+      res.status(500).json({ msg: `There was an error with your request: ${error}` });
+    }
 });
 
 router.get('/:id', (req: Request, res: Response) => {
 });
 
-router.post<{}, MessageInterface, UserInterface>('/',
+router.post<{}, MessageInterface, UserInterface >('/',
   body('name').isLength({min: 3, max: 100}).withMessage('name must have beetwen 3 and 100 characters.'),
   body('name').notEmpty(),
   body('name').isString().withMessage('name must be a string.'),
   body('birthday').isDate().withMessage('birthday must be a date.'),
   body('birthday').notEmpty(),
-  async (req: Request, res: Response) => {
+  async (req, res) => {
     try {
-      const errors = validationResult(req)
+      const errors = validationResult(req);
       if (errors.isEmpty()) {
         const { name, birthday } = req.body;
         const user = new User();
