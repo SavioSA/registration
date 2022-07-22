@@ -18,7 +18,7 @@ router.get< {}, UserInterface[] | MessageInterface, {}, PaginationInterface >('/
         take,
         skip: currentPage * take
       });
-      res.json(users);
+      res.status(200).json(users);
     } catch (error) {
       res.status(500).json({ msg: `There was an error with your request: ${error}` });
     }
