@@ -1,8 +1,7 @@
+import cors from 'cors';
 import express, { Router } from 'express';
 import { UsersController } from './controllers/user';
 import dbConnection from './database/db-connection';
-
-
 dbConnection.initialize()
   .then(() => {
       console.log("Data Source has been initialized!")
@@ -16,6 +15,7 @@ const app = express();
 const route = Router()
 
 
+app.use(cors())
 
 app.use(express.json())
 
