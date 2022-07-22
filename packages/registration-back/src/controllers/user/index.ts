@@ -2,13 +2,13 @@ import { Request, Response, Router } from 'express';
 import { body, validationResult } from 'express-validator';
 import dbConnection from '../../database/db-connection';
 import { User } from '../../database/entities/user.entity';
-import { MessageInterface } from '../../helpers/interfaces/message.interface';
+import { MessageInterface, PaginationInterface } from '../../helpers/interfaces/utilInterfaces';
 import { UserInterface } from './interfaces/user.interface';
 
 const router: Router = Router();
 const userRepository = dbConnection.getRepository(User)
 
-router.get< {}, UserInterface[] | MessageInterface, {}, {offset: number, page: number } >('/', async (req, res) => {
+router.get< {}, UserInterface[] | MessageInterface, {}, PaginationInterface >('/', async (req, res) => {
     try {
       const { offset, page } = req.query;      
       const take: number = isNaN(offset)? 0 : offset;
