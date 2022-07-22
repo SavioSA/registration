@@ -9,10 +9,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in desserts" :key="item.name">
-          <td>{{ item.name }}</td>
-          <td>{{ item.calories }}</td>
-
+        <tr v-for="user in users" :key="user.name">
+          <td>{{ user.name }}</td>
+          <td>{{ formatDate(user.birthday) }}</td>
           <td><v-icon icon="fas fa-trash" /></td>
         </tr>
       </tbody>
@@ -20,54 +19,28 @@
   </section>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
-
+import { computed, defineComponent } from "vue";
+import { useUsersStore } from "../stores/users";
 export default defineComponent({
   name: "UserList",
-  data() {
+  setup() {
+    const usersStore = useUsersStore();
+    usersStore.fetchUsers();
+    const users = computed(() => {
+      return usersStore.getUsers;
+    });
+    const formatDate = (value) => {
+      if (value) {
+        const dateInformation = value.split("T")[0].split("-");
+        const day = dateInformation[2];
+        const month = dateInformation[1];
+        const year = dateInformation[0];
+        return `${day}/${month}/${year}`;
+      }
+    };
     return {
-      desserts: [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-        },
-        {
-          name: "Donut",
-          calories: 452,
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-        },
-      ],
+      users,
+      formatDate,
     };
   },
 });
