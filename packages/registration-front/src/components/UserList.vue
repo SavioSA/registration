@@ -12,7 +12,7 @@
         <tbody>
           <tr v-for="user in users" :key="user.name">
             <td>
-              <router-link class="link" :to="`user/${user.id}`" />
+              <router-link class="link" :to="`users/${user.id}`" />
               {{ user.name }}
             </td>
             <td>
