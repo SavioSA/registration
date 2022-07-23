@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src",
     "strictPropertyInitialization": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "paths": {
+      "@lib/utilInterfaces": ["../core/lib/shared/helpers/utilInterfaces.ts"],
+    },
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
     /* Projects */

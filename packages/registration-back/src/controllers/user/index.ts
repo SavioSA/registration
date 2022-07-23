@@ -1,10 +1,9 @@
+import { UserInterface, UsersPaginationInterface } from '@lib/utilInterfaces';
 import { Router } from 'express';
 import { body, validationResult } from 'express-validator';
 import dbConnection from '../../database/db-connection';
 import { User } from '../../database/entities/user.entity';
 import { MessageInterface, PaginationInterface } from '../../helpers/interfaces/utilInterfaces';
-import { UserInterface } from './interfaces/user.interface';
-import { UsersPaginationInterface } from './interfaces/users-pagination.inteface';
 
 const router: Router = Router();
 const userRepository = dbConnection.getRepository(User)
