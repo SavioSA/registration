@@ -4,21 +4,29 @@ import dbConnection from '../../database/db-connection';
 import { User } from '../../database/entities/user.entity';
 import { MessageInterface, PaginationInterface } from '../../helpers/interfaces/utilInterfaces';
 import { UserInterface } from './interfaces/user.interface';
+import { UsersPaginationInterface } from './interfaces/users-pagination.inteface';
 
 const router: Router = Router();
 const userRepository = dbConnection.getRepository(User)
 
-router.get< {}, UserInterface[] | MessageInterface, {}, PaginationInterface >('/', async (req, res) => {
+router.get< {}, UsersPaginationInterface | MessageInterface, {}, PaginationInterface >('/', async (req, res) => {
     try {
       const { offset, page } = req.query;
       const take: number = isNaN(offset)? 0 : offset;
       let currentPage: number = isNaN(page)? 0 : page;
       currentPage = currentPage > 0 ? currentPage - 1 : currentPage;
-      const users = await userRepository.find({
+      const itensPerPage = currentPage * take      
+      const usersSearch = await userRepository.findAndCount({
         take,
-        skip: currentPage * take
+        skip: itensPerPage
       });
-      res.status(200).json(users);
+  
+      const users: User[] = usersSearch[0];
+      const usersTotalCount: number = usersSearch[1];
+      const pagesQuantity: number = Math.floor(usersTotalCount / offset, );
+            
+
+      res.status(200).json({ users, pagesQuantity });
     } catch (error) {
       res.status(500).json({ msg: `There was an error with your request: ${error}` });
     }
