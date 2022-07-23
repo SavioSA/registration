@@ -46,7 +46,7 @@ router.get< { id: number }, UserInterface | MessageInterface, {}, {} >('/:id', a
   }
 });
 
-router.post<{}, MessageInterface, UserInterface >('/',
+router.post<{}, MessageInterface | UserInterface, UserInterface >('/',
   body('name').isLength({min: 3, max: 100}).withMessage('name must have beetwen 3 and 100 characters.'),
   body('name').notEmpty(),
   body('name').isString().withMessage('name must be a string.'),
@@ -54,14 +54,14 @@ router.post<{}, MessageInterface, UserInterface >('/',
   body('birthday').notEmpty(),
   async (req, res) => {
     try {
-      const errors = validationResult(req);
+      const errors = validationResult(req);      
       if (errors.isEmpty()) {
         const { name, birthday } = req.body;
         const user = new User();
         user.birthday = birthday;
         user.name = name;
-        await userRepository.save(user);
-        res.status(200).json({ msg: 'User registered successfully.' });
+        const registeredUser = await userRepository.save(user);
+        res.status(200).json(registeredUser);
       } else {
         const errorMessage = setErrorValidationMessage(errors.array());
         res.status(403).json({ msg: errorMessage });
