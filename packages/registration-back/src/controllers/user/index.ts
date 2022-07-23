@@ -23,9 +23,8 @@ router.get< {}, UsersPaginationInterface | MessageInterface, {}, PaginationInter
   
       const users: User[] = usersSearch[0];
       const usersTotalCount: number = usersSearch[1];
-      const pagesQuantity: number = Math.floor(usersTotalCount / offset, );
-            
-
+      const pagesQuantity: number = Math.ceil(usersTotalCount / (offset || usersTotalCount));
+      
       res.status(200).json({ users, pagesQuantity });
     } catch (error) {
       res.status(500).json({ msg: `There was an error with your request: ${error}` });
