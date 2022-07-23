@@ -13,6 +13,11 @@ const router = createRouter({
       component: () => import("../views/UserListView.vue"),
     },
     {
+      path: "/users/new",
+      name: "user-register",
+      component: () => import("../views/UserRegistrationView.vue"),
+    },
+    {
       path: "/:catchAll(.*)",
       redirect: "/users",
     },
