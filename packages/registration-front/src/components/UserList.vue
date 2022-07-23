@@ -85,6 +85,7 @@ section.main-section {
 }
 
 section.table-section {
+  border-radius: 0.2rem;
   min-height: 27.25rem;
 }
 
