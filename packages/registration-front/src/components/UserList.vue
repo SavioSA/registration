@@ -11,8 +11,13 @@
         </thead>
         <tbody>
           <tr v-for="user in users" :key="user.name">
-            <td>{{ user.name }}</td>
-            <td>{{ formatDate(user.birthday) }}</td>
+            <td>
+              <router-link class="link" :to="`user/${user.id}`" />
+              {{ user.name }}
+            </td>
+            <td>
+              {{ formatDate(user.birthday) }}
+            </td>
             <td><v-icon icon="fas fa-trash" /></td>
           </tr>
         </tbody>
@@ -81,5 +86,16 @@ section.main-section {
 
 section.table-section {
   min-height: 27.25rem;
+}
+
+tr {
+  position: relative;
+  a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 70%;
+    height: 100%;
+  }
 }
 </style>
