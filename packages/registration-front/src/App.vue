@@ -31,4 +31,8 @@ section.main-section {
   align-items: center;
   flex-direction: column;
 }
+
+main {
+  background: #d0e6ff;
+}
 </style>
