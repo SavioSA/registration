@@ -9,7 +9,7 @@ export const useUsersStore = defineStore({
     getUsers: (state) => state.users,
   },
   actions: {
-    async fetchUsers(offset = 0, page = 0) {
+    async fetchUsers(offset = 8, page = 0) {
       try {
         const query = await axios.get(
           `http://localhost:3333/users?offset=${offset}&page=${page}`
