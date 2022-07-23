@@ -1,12 +1,16 @@
+import type { UsersPaginationInterface } from "@lib/utilInterfaces";
 import axios from "axios";
 import { defineStore } from "pinia";
+
 export const useUsersStore = defineStore({
   id: "user",
-  state: () => ({
-    users: [],
+  state: (): {
+    usersInformations: UsersPaginationInterface | undefined;
+  } => ({
+    usersInformations: undefined,
   }),
   getters: {
-    getUsers: (state) => state.users,
+    getUsersInformations: (state) => state.usersInformations,
   },
   actions: {
     async fetchUsers(offset = 8, page = 0) {
@@ -14,7 +18,7 @@ export const useUsersStore = defineStore({
         const query = await axios.get(
           `http://localhost:3333/users?offset=${offset}&page=${page}`
         );
-        this.users = query.data;
+        this.usersInformations = query.data;
       } catch (error) {
         console.error(error);
       }
