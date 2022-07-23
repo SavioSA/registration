@@ -38,7 +38,7 @@ import { defineComponent, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUsersStore } from "../stores/users";
 export default defineComponent({
-  name: "UserRegistrationForm",
+  name: "UserEditorForm",
   setup() {
     const router = useRouter();
     const usersStore = useUsersStore();
