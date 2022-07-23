@@ -5,8 +5,16 @@ const router = createRouter({
   routes: [
     {
       path: "/",
+      redirect: "/users",
+    },
+    {
+      path: "/users",
       name: "user-list",
       component: () => import("../views/UserListView.vue"),
+    },
+    {
+      path: "/:catchAll(.*)",
+      redirect: "/users",
     },
   ],
 });
