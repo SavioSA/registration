@@ -1,25 +1,22 @@
 <template>
   <section class="main-section">
     <v-card class="registration-card" title="Cadastre um novo Usuário">
-      <v-form>
+      <v-form ref="formRef">
         <v-container>
           <v-row>
-            <v-col class="input-test">
+            <v-col>
               <v-text-field
-                v-model="title"
-                :rules="rules"
-                hint="This field uses counter prop"
-                label="Regular"
+                v-model="formData.name"
+                :rules="validation.nameRules"
+                label="Nome"
               ></v-text-field>
             </v-col>
-            <v-col class="input-test">
+            <v-col>
               <v-text-field
-                v-model="title"
-                :rules="rules"
+                v-model="formData.birthday"
+                :rules="validation.dateRules"
                 type="date"
-                counter="25"
-                hint="This field uses counter prop"
-                label="Regular"
+                label="Data de nascimento"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -27,7 +24,7 @@
             <v-btn color="error" class="mr-4" @click="returnToMain">
               Cancelar
             </v-btn>
-            <v-btn color="success" class="mr-4" @click="reset">
+            <v-btn color="success" class="mr-4" @click="validate">
               Cadastrar
             </v-btn>
           </v-container>
@@ -37,50 +34,67 @@
   </section>
 </template>
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUsersStore } from "../stores/users";
 export default defineComponent({
   name: "UserRegistrationForm",
   setup() {
     const router = useRouter();
-    const currentPage = ref(1);
-    watch(currentPage, (val) => {
-      usersStore.fetchUsers(8, val);
-    });
     const usersStore = useUsersStore();
-    usersStore.fetchUsers();
-    const users = computed(() => {
-      if (usersStore.getUsersInformations) {
-        return usersStore.getUsersInformations.users;
-      }
-      return [];
+    const formRef = ref(null);
+    const formData = reactive({
+      name: "",
+      birthday: null,
     });
-    const pagesQuantity = computed(() => {
-      if (usersStore.getUsersInformations) {
-        return usersStore.getUsersInformations.pagesQuantity;
+    const getAge = (dateString) => {
+      const today = new Date();
+      const birthDate = new Date(dateString);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
       }
-      return 0;
-    });
-    const formatDate = (value) => {
-      if (value) {
-        const dateInformation = value.split("T")[0].split("-");
-        const day = dateInformation[2];
-        const month = dateInformation[1];
-        const year = dateInformation[0];
-        return `${day}/${month}/${year}`;
-      }
+      return age;
     };
 
+    const validation = {
+      nameRules: [
+        (v) => !!v || "Nome é obrigatório.",
+        (v) => v.length <= 100 || "Tamanho Máximo de 100 characters.",
+        (v) => v.length >= 3 || "Tamanho Mínimo de 100 characters.",
+      ],
+      dateRules: [
+        (v) => !!v || "Data de nasciemnto é obrigatória.",
+        (v) =>
+          /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/.test(v) ||
+          "Formato de data Inválida.",
+        (v) => {
+          const age = getAge(v);
+          return age < 100 && age >= 18
+            ? true
+            : "Idade deve ser entre 18 e 100 anos.";
+        },
+      ],
+    };
     const returnToMain = () => {
       router.replace("/");
     };
+    const validate = async () => {
+      const { valid } = await formRef.value.validate();
+      if (valid) {
+        await usersStore.createUser(formData);
+        const { id } = usersStore.getCurrentUser;
+        router.replace(`/user/${id}`);
+      }
+    };
+
     return {
-      users,
-      formatDate,
-      currentPage,
-      pagesQuantity,
       returnToMain,
+      validation,
+      formRef,
+      validate,
+      formData,
     };
   },
 });
@@ -105,10 +119,6 @@ section.main-section {
     .registration-card {
       width: 70%;
     }
-  }
-
-  .input-test {
-    width: 50%;
   }
 
   .v-form {
