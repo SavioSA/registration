@@ -39,10 +39,16 @@ export default defineComponent({
     const usersStore = useUsersStore();
     usersStore.fetchUsers();
     const users = computed(() => {
-      return usersStore.getUsersInformations.users;
+      if (usersStore.getUsersInformations) {
+        return usersStore.getUsersInformations.users;
+      }
+      return [];
     });
     const pagesQuantity = computed(() => {
-      return usersStore.getUsersInformations.pagesQuantity;
+      if (usersStore.getUsersInformations) {
+        return usersStore.getUsersInformations.pagesQuantity;
+      }
+      return 0;
     });
     const formatDate = (value) => {
       if (value) {
