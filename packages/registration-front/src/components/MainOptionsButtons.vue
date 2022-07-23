@@ -1,12 +1,12 @@
 <template>
   <section class="buttons-section">
-    <v-btn color="success">
+    <v-btn @click="goToRoute('/users/new')" color="success">
       <div class="icon-container">
         <v-icon icon="fas fa-plus" />
       </div>
       <p>Novo usuário</p>
     </v-btn>
-    <v-btn color="primary">
+    <v-btn @click="goToRoute('/users')" color="primary">
       <div class="icon-container">
         <v-icon icon="fas fa-list" />
       </div>
@@ -17,11 +17,19 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "MainOptionsButtons",
-  data() {
-    return {};
+  setup() {
+    const router = useRouter();
+    const goToRoute = (route: string) => {
+      router.replace(route);
+    };
+
+    return {
+      goToRoute,
+    };
   },
 });
 </script>
