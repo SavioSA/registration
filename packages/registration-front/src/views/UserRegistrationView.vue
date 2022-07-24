@@ -1,6 +1,6 @@
 <template>
   <section class="list-section">
-    <UserEditorForm />
+    <UserEditorForm pageTitle="Criar Usuário" />
   </section>
 </template>
 <script lang="ts">

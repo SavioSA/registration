@@ -1,6 +1,6 @@
 <template>
   <section class="main-section">
-    <v-card class="registration-card" title="Cadastre um novo Usuário">
+    <v-card class="registration-card" :title="title">
       <v-form ref="formRef">
         <v-container>
           <v-row>
@@ -34,12 +34,16 @@
   </section>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
+import { computed, defineComponent, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUsersStore } from "../stores/users";
 export default defineComponent({
   name: "UserEditorForm",
-  setup() {
+  props: ["pageTitle"],
+  setup(props) {
+    const title = computed(() => {
+      return props.pageTitle;
+    });
     const router = useRouter();
     const usersStore = useUsersStore();
     const formRef = ref(null);
@@ -85,7 +89,7 @@ export default defineComponent({
       if (valid) {
         await usersStore.createUser(formData);
         const { id } = usersStore.getCurrentUser;
-        router.replace(`/user/${id}`);
+        router.replace(`/users/${id}`);
       }
     };
 
@@ -95,6 +99,7 @@ export default defineComponent({
       formRef,
       validate,
       formData,
+      title,
     };
   },
 });
