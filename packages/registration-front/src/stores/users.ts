@@ -9,10 +9,13 @@ export const useUsersStore = defineStore({
   id: "user",
   state: (): {
     usersInformations: UsersPaginationInterface | undefined;
-    currentUser: UserInterface | undefined;
+    currentUser: UserInterface;
   } => ({
     usersInformations: undefined,
-    currentUser: undefined,
+    currentUser: {
+      name: "",
+      birthday: "",
+    },
   }),
   getters: {
     getUsersInformations: (state) => state.usersInformations,
@@ -31,11 +34,17 @@ export const useUsersStore = defineStore({
     },
     async createUser(user: UserInterface) {
       try {
-        console.log("asdadasd");
-
         const query = await axios.post(`http://localhost:3333/users`, {
           ...user,
         });
+        this.currentUser = query.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async setCurrentUser(id: number) {
+      try {
+        const query = await axios.get(`http://localhost:3333/users/${id}`);
         this.currentUser = query.data;
       } catch (error) {
         console.error(error);
