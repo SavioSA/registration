@@ -45,7 +45,13 @@ export const useUsersStore = defineStore({
     async setCurrentUser(id: number) {
       try {
         const query = await axios.get(`http://localhost:3333/users/${id}`);
-        this.currentUser = query.data;
+        const { name, birthday } = query.data;
+        const formatedDate = birthday.split("T")[0];
+        this.currentUser = {
+          id,
+          name,
+          birthday: formatedDate,
+        };
       } catch (error) {
         console.error(error);
       }
