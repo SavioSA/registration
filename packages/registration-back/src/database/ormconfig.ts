@@ -2,12 +2,12 @@ import dotenv from 'dotenv';
 import { DataSourceOptions } from 'typeorm';
 dotenv.config({path: '../../.env'});
 
-export function getConfig(host:string) {
+export function getConfig() {
       return {
             migrationsTableName: 'migrations',
             type: 'mysql',
             port: process.env.MYSQL_PORT,
-            host: host,
+            host:  process.env.MYSQL_HOST,
             username: process.env.MYSQL_USER,
             password: process.env.MYSQL_ROOT_PASSWORD,
             database:  process.env.MYSQL_DATABASE,
