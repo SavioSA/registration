@@ -21,11 +21,10 @@
             </v-col>
           </v-row>
           <v-container class="buttons-container">
-            <v-btn color="error" class="mr-4" @click="returnToMain">
-              Cancelar
-            </v-btn>
+            <v-btn class="mr-4" @click="returnToMain"> Cancelar </v-btn>
+
             <v-btn color="success" class="mr-4" @click="validate">
-              {{ formData.id ? "Editar" : "Cadastrar" }}
+              {{ formData.id ? "Salvar" : "Cadastrar" }}
             </v-btn>
           </v-container>
         </v-container>
@@ -34,7 +33,7 @@
   </section>
 </template>
 <script lang="ts">
-import { computed, defineComponent, reactive, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUsersStore } from "../stores/users";
 export default defineComponent({
@@ -65,11 +64,11 @@ export default defineComponent({
     const validation = {
       nameRules: [
         (v) => !!v || "Nome é obrigatório.",
-        (v) => v.length <= 100 || "Tamanho Máximo de 100 characters.",
-        (v) => v.length >= 3 || "Tamanho Mínimo de 100 characters.",
+        (v) => v.length <= 100 || "Tamanho máximo de 100 characters.",
+        (v) => v.length >= 3 || "Tamanho mínimo de 3 characters.",
       ],
       dateRules: [
-        (v) => !!v || "Data de nasciemnto é obrigatória.",
+        (v) => !!v || "Data de nascimento é obrigatória.",
         (v) =>
           /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/.test(v) ||
           "Formato de data Inválida.",
@@ -80,6 +79,10 @@ export default defineComponent({
             : "Idade deve ser entre 18 e 100 anos.";
         },
       ],
+    };
+    const deleteUser = (id: number) => {
+      usersStore.deleteUser(id);
+      router.replace("/");
     };
     const returnToMain = () => {
       router.replace("/");
@@ -104,6 +107,7 @@ export default defineComponent({
       validate,
       formData,
       title,
+      deleteUser,
     };
   },
 });
@@ -136,8 +140,7 @@ section.main-section {
 
   .buttons-container {
     display: flex;
-    justify-content: space-around;
-    width: 80%;
+    justify-content: flex-end;
   }
 }
 </style>

@@ -18,40 +18,7 @@
             <td>
               {{ formatDate(user.birthday) }}
             </td>
-            <td>
-              <v-col cols="auto">
-                <v-dialog transition="dialog-bottom-transition">
-                  <template v-slot:activator="{ props }">
-                    <v-icon
-                      style="color: red"
-                      icon="fas fa-trash"
-                      v-bind="props"
-                    />
-                  </template>
-                  <template v-slot:default="{ isActive }">
-                    <v-card>
-                      <v-toolbar color="error">Excluir Usuário</v-toolbar>
-                      <v-card-text>
-                        <div class="text-h8 pa-12">
-                          Você realmente deseja Excluir o usuário
-                          {{ user.name }}?
-                        </div>
-                      </v-card-text>
-
-                      <v-card-actions class="justify-end">
-                        <v-btn @click="isActive.value = false"> Não </v-btn>
-                        <v-btn
-                          @click="deleteUser(isActive, user.id)"
-                          color="error"
-                        >
-                          Sim
-                        </v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </template>
-                </v-dialog>
-              </v-col>
-            </td>
+            <td><UserDeletionModal :user="user" callerMode="icon" /></td>
           </tr>
         </tbody>
       </v-table>
@@ -68,10 +35,13 @@
 import { computed, defineComponent, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useUsersStore } from "../stores/users";
+import UserDeletionModal from "./UserDeletionModal.vue";
 export default defineComponent({
   name: "UserList",
+  components: {
+    UserDeletionModal,
+  },
   setup() {
-    const router = useRouter();
     const currentPage = ref(1);
     watch(currentPage, (val) => {
       usersStore.fetchUsers(8, val);
@@ -104,17 +74,12 @@ export default defineComponent({
         console.log(u);
       });
     });
-    const deleteUser = async (isActive: { value: boolean }, userId: number) => {
-      await usersStore.deleteUser(userId);
-      usersStore.fetchUsers();
-      isActive.value = false;
-    };
+
     return {
       users,
       formatDate,
       currentPage,
       pagesQuantity,
-      deleteUser,
     };
   },
 });
