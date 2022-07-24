@@ -73,11 +73,6 @@ export default defineComponent({
         return `${day}/${month}/${year}`;
       }
     };
-    watch(users, (users) => {
-      users.forEach((u) => {
-        console.log(u);
-      });
-    });
 
     return {
       users,
