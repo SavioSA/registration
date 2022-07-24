@@ -25,6 +25,8 @@ services:
 
   front:
     image: node
+    depends_on:
+      - back
     volumes:
     - './packages/registration-front:/registration-front'
     command: bash -c "cd ./registration-front && apt update && apt install && apt install yarn -y && yarn install && yarn dev --host 0.0.0.0"
