@@ -4,6 +4,8 @@ import type {
 } from "@lib/utilInterfaces";
 import axios from "axios";
 import { defineStore } from "pinia";
+import { useFeedbackStore } from "./feedback";
+const feedbackStore = useFeedbackStore();
 
 export const useUsersStore = defineStore({
   id: "user",
@@ -29,6 +31,7 @@ export const useUsersStore = defineStore({
         );
         this.usersInformations = query.data;
       } catch (error) {
+        feedbackStore.showErrorFeedback("Houve um erro ao buscar usuários.");
         console.error(error);
       }
     },
@@ -38,7 +41,11 @@ export const useUsersStore = defineStore({
           ...user,
         });
         this.currentUser = query.data;
+        if (query.status === 200) {
+          feedbackStore.showSucessFeedback("Usuário criado com sucesso.");
+        }
       } catch (error) {
+        feedbackStore.showErrorFeedback("Houve um erro ao criar usuário.");
         console.error(error);
       }
     },
@@ -53,7 +60,7 @@ export const useUsersStore = defineStore({
           birthday: formatedDate,
         };
       } catch (error) {
-        console.error(error);
+        feedbackStore.showErrorFeedback("Houve um erro ao buscar usuários.");
       }
     },
     async editCurrentUser(user: UserInterface) {
@@ -61,14 +68,22 @@ export const useUsersStore = defineStore({
         const query = await axios.put(`http://localhost:3333/users`, {
           ...user,
         });
+        if (query.status === 200) {
+          feedbackStore.showSucessFeedback("Usuário editado com sucesso.");
+        }
       } catch (error) {
+        feedbackStore.showErrorFeedback("Houve um erro ao editar usuário.");
         console.error(error);
       }
     },
     async deleteUser(id: number) {
       try {
         const query = await axios.delete(`http://localhost:3333/users/${id}`);
+        if (query.status === 200) {
+          feedbackStore.showSucessFeedback("Usuário excluído com sucesso.");
+        }
       } catch (error) {
+        feedbackStore.showErrorFeedback("Houve um erro ao excluir usuário.");
         console.error(error);
       }
     },
