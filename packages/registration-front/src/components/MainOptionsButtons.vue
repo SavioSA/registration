@@ -1,12 +1,20 @@
 <template>
   <section class="buttons-section">
-    <v-btn @click="goToRoute('/users/new')" color="success">
+    <v-btn
+      @click="goToRoute('/users/new')"
+      :disabled="newUserDisabled"
+      color="success"
+    >
       <div class="icon-container">
         <v-icon icon="fas fa-plus" />
       </div>
       <p>Novo usuário</p>
     </v-btn>
-    <v-btn @click="goToRoute('/users')" color="primary">
+    <v-btn
+      @click="goToRoute('/users')"
+      :disabled="userListDisabled"
+      color="primary"
+    >
       <div class="icon-container">
         <v-icon icon="fas fa-list" />
       </div>
@@ -16,12 +24,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { useRouter } from "vue-router";
+import { computed, defineComponent } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
   name: "MainOptionsButtons",
   setup() {
+    const route = useRoute();
+    const newUserDisabled = computed(() => {
+      return route.name === "user-register";
+    });
+    const userListDisabled = computed(() => {
+      return route.name === "user-list";
+    });
     const router = useRouter();
     const goToRoute = (route: string) => {
       router.replace(route);
@@ -29,6 +44,8 @@ export default defineComponent({
 
     return {
       goToRoute,
+      newUserDisabled,
+      userListDisabled,
     };
   },
 });

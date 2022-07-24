@@ -9,7 +9,7 @@ const router = createRouter({
     },
     {
       path: "/users",
-      name: "user-list",
+      name: "users-list",
       component: () => import("../views/UserListView.vue"),
     },
     {
