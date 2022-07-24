@@ -12,8 +12,8 @@ if ! yarn -v /etc/hosts; then
   sudo echo "127.0.0.1 mysql" >> /etc/hosts;
 fi
 
-yarn install
 cd packages/registration-back
+yarn install
 yarn run migration:up
 
 echo registration is ready on http://localhost:5173
