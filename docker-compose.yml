@@ -40,7 +40,7 @@ services:
       - .env
     volumes:
       - './packages/registration-back:/registration-back'
-    command: bash -c "cd ./registration-back && apt update && apt install && apt install yarn -y && yarn run migration:up && yarn install && yarn dev --host 0.0.0.0" 
+    command: bash -c "cd ./registration-back && apt update && apt install && apt install yarn -y && yarn install && yarn run migration:up && yarn dev --host 0.0.0.0" 
     ports:
       - "3333:3333"
 
