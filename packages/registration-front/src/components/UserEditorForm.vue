@@ -25,7 +25,7 @@
               Cancelar
             </v-btn>
             <v-btn color="success" class="mr-4" @click="validate">
-              Cadastrar
+              {{ formData.id ? "Editar" : "Cadastrar" }}
             </v-btn>
           </v-container>
         </v-container>
@@ -87,9 +87,13 @@ export default defineComponent({
     const validate = async () => {
       const { valid } = await formRef.value.validate();
       if (valid) {
-        await usersStore.createUser(formData.value);
-        const { id } = usersStore.getCurrentUser;
-        router.replace(`/users/${id}`);
+        if (formData.value.id) {
+          await usersStore.editCurrentUser(formData.value);
+        } else {
+          await usersStore.createUser(formData.value);
+          const { id } = usersStore.getCurrentUser;
+          router.replace(`/users/${id}`);
+        }
       }
     };
 
