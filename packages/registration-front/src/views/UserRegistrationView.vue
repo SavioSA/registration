@@ -1,15 +1,25 @@
 <template>
   <section class="list-section">
-    <UserEditorForm pageTitle="Criar Usuário" />
+    <UserEditorForm pageTitle="Criar Usuário" :userFormData="userFormData" />
   </section>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent, reactive } from "vue";
 import UserEditorForm from "../components/UserEditorForm.vue";
 export default defineComponent({
   name: "UserRegistrationView",
   components: {
     UserEditorForm,
+  },
+  setup() {
+    const userFormData = reactive({
+      name: "",
+      birthday: null,
+    });
+
+    return {
+      userFormData,
+    };
   },
 });
 </script>

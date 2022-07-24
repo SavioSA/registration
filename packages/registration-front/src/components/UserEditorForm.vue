@@ -39,18 +39,18 @@ import { useRouter } from "vue-router";
 import { useUsersStore } from "../stores/users";
 export default defineComponent({
   name: "UserEditorForm",
-  props: ["pageTitle"],
+  props: ["pageTitle", "userFormData"],
   setup(props) {
+    const formData = computed(() => {
+      return props.userFormData;
+    });
     const title = computed(() => {
       return props.pageTitle;
     });
     const router = useRouter();
     const usersStore = useUsersStore();
     const formRef = ref(null);
-    const formData = reactive({
-      name: "",
-      birthday: null,
-    });
+
     const getAge = (dateString) => {
       const today = new Date();
       const birthDate = new Date(dateString);
@@ -87,7 +87,7 @@ export default defineComponent({
     const validate = async () => {
       const { valid } = await formRef.value.validate();
       if (valid) {
-        await usersStore.createUser(formData);
+        await usersStore.createUser(formData.value);
         const { id } = usersStore.getCurrentUser;
         router.replace(`/users/${id}`);
       }
