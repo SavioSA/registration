@@ -8,17 +8,7 @@ docker-compose rm -fs mysql front back
 
 docker-compose up --build -d
 
-
-if ! yarn -v /etc/hosts; then
-  echo 'sudo is required only to install yarn :)'
-  sudo apt update
-  sudo apt install yarn -y
-  sudo echo "127.0.0.1 mysql" >> /etc/hosts;
-fi
-
-cd packages/registration-back
-yarn install
-yarn run migration:up
+sleep 5
 
 echo registration is ready on http://localhost:5173
 
