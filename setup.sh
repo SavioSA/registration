@@ -17,6 +17,7 @@ if ! yarn -v /etc/hosts; then
 fi
 
 cd packages/registration-back
+yarn install
 yarn run migration:up
 
 echo registration is ready on http://localhost:5173
