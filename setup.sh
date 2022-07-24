@@ -4,7 +4,6 @@ cp .env.example .env
 
 docker-compose up --build -d
 
-cd packages/registration-back
 
 if ! yarn -v /etc/hosts; then
   echo 'sudo is required only to install yarn :)'
@@ -13,6 +12,8 @@ if ! yarn -v /etc/hosts; then
   sudo echo "127.0.0.1 mysql" >> /etc/hosts;
 fi
 
+yarn install
+cd packages/registration-back
 yarn run migration:up
 
 echo registration is ready on http://localhost:5173
