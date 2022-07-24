@@ -56,5 +56,14 @@ export const useUsersStore = defineStore({
         console.error(error);
       }
     },
+    async editCurrentUser(user: UserInterface) {
+      try {
+        axios.put(`http://localhost:3333/users`, {
+          ...user,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
 });
