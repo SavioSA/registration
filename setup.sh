@@ -2,6 +2,10 @@
 
 cp .env.example .env
 
+echo "Stopping current containers..."
+docker stop $(docker ps -a -q)
+docker-compose rm -fs mysql front back
+
 docker-compose up --build -d
 
 
@@ -13,7 +17,6 @@ if ! yarn -v /etc/hosts; then
 fi
 
 cd packages/registration-back
-yarn install
 yarn run migration:up
 
 echo registration is ready on http://localhost:5173
