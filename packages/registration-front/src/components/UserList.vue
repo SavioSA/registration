@@ -1,6 +1,10 @@
 <template>
   <section class="main-section">
-    <section class="table-section">
+    <section class="no-users-section" v-if="!users.length">
+      <v-icon style="color: #000" class="sad-icon" icon="far fa-sad-tear" />
+      <h1>Você ainda não registrou nenhum usuário.</h1>
+    </section>
+    <section class="table-section" v-if="users.length">
       <v-table>
         <thead>
           <tr>
@@ -23,7 +27,7 @@
         </tbody>
       </v-table>
     </section>
-    <section class="pagination-section">
+    <section class="pagination-section" v-if="users.length">
       <v-pagination
         v-model="currentPage"
         :length="pagesQuantity"
@@ -93,6 +97,21 @@ section.main-section {
   section.main-section {
     width: 70%;
   }
+}
+
+section.no-users-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .sad-icon {
+    font-size: 10rem;
+  }
+  font-size: 2rem;
+  text-align: center;
+  border-radius: 0.2rem;
+  min-height: 27.25rem;
+  background: #fff;
 }
 
 section.table-section {
