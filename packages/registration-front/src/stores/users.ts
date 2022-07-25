@@ -19,10 +19,6 @@ export const useUsersStore = defineStore({
       birthday: "",
     },
   }),
-  getters: {
-    getUsersInformations: (state) => state.usersInformations,
-    getCurrentUser: (state) => state.currentUser,
-  },
   actions: {
     async fetchUsers(offset = 8, page = 0) {
       try {

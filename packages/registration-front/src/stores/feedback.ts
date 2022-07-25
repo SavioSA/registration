@@ -9,9 +9,6 @@ export const useFeedbackStore = defineStore({
       isActive: false,
     },
   }),
-  getters: {
-    getFeedback: (state) => state.feedbackInformations,
-  },
   actions: {
     async showSucessFeedback(message: string) {
       this.showFeedback(message, "success");
