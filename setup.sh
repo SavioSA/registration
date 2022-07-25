@@ -10,6 +10,5 @@ docker-compose up --build -d
 
 sleep 5
 
-echo registration is ready on http://localhost:5173
-
-
+echo registration will be ready on http://localhost:5173 soon
+echo you can follow through docker logs
