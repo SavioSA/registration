@@ -1,10 +1,16 @@
 <template>
   <section class="main-section">
-    <section class="no-users-section" v-if="!users.length">
+    <section
+      class="no-users-section"
+      v-if="!usersStore?.usersInformations?.pagesQuantity"
+    >
       <v-icon style="color: #000" class="sad-icon" icon="far fa-sad-tear" />
       <h1>Você ainda não registrou nenhum usuário.</h1>
     </section>
-    <section class="table-section" v-if="users.length">
+    <section
+      class="table-section"
+      v-if="usersStore?.usersInformations?.pagesQuantity"
+    >
       <v-table>
         <thead>
           <tr>
@@ -14,7 +20,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in users" :key="user.id">
+          <tr v-for="user in usersStore.usersInformations.users" :key="user.id">
             <td>
               <router-link class="link" :to="`users/${user.id}`" />
               {{ user.name }}
@@ -27,17 +33,19 @@
         </tbody>
       </v-table>
     </section>
-    <section class="pagination-section" v-if="users.length">
+    <section
+      class="pagination-section"
+      v-if="usersStore?.usersInformations?.pagesQuantity"
+    >
       <v-pagination
         v-model="currentPage"
-        :length="pagesQuantity"
+        :length="usersStore?.usersInformations?.pagesQuantity"
       ></v-pagination>
     </section>
   </section>
 </template>
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from "vue";
-import { useRouter } from "vue-router";
+import { defineComponent, ref, watch } from "vue";
 import { useUsersStore } from "../stores/users";
 import UserDeletionModal from "./UserDeletionModal.vue";
 export default defineComponent({
@@ -52,18 +60,7 @@ export default defineComponent({
     });
     const usersStore = useUsersStore();
     usersStore.fetchUsers();
-    const users = computed(() => {
-      if (usersStore.getUsersInformations) {
-        return usersStore.getUsersInformations.users;
-      }
-      return [];
-    });
-    const pagesQuantity = computed(() => {
-      if (usersStore.getUsersInformations) {
-        return usersStore.getUsersInformations.pagesQuantity;
-      }
-      return 0;
-    });
+
     const formatDate = (value) => {
       if (value) {
         const dateInformation = value.split("T")[0].split("-");
@@ -75,10 +72,9 @@ export default defineComponent({
     };
 
     return {
-      users,
+      usersStore,
       formatDate,
       currentPage,
-      pagesQuantity,
     };
   },
 });
