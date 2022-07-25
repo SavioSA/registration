@@ -10,6 +10,7 @@
     "express": "^4.18.1",
     "express-validator": "^6.14.2",
     "mysql": "^2.18.1",
+    "registration": "^2.0.0",
     "ts-node": "^10.9.1",
     "typeorm": "^0.3.7"
   },

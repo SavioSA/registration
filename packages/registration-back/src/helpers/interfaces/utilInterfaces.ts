@@ -4,5 +4,5 @@ export interface MessageInterface {
 
 export interface PaginationInterface{
   offset: number
-  page: number 
+  page: number
 }
