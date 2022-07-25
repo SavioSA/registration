@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
-import { UserInterface, UsersPaginationInterface } from '@lib/utilInterfaces';
+import { UserInterface, UsersPaginationInterface } from '@shared/interfaces';
 import { Router } from 'express';
 import { body, validationResult } from 'express-validator';
 import dbConnection from '../../database/db-connection';

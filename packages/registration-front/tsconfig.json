@@ -6,7 +6,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@lib/utilInterfaces": ["../core/lib/shared/helpers/utilInterfaces.ts"]
+      "@shared/interfaces": ["../core/lib/shared/interfaces/index.ts"],
     }
   },
 

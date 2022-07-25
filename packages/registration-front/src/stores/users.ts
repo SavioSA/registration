@@ -1,7 +1,7 @@
 import type {
   UserInterface,
   UsersPaginationInterface
-} from "@lib/utilInterfaces";
+} from "@shared/interfaces";
 import axios from "axios";
 import { defineStore } from "pinia";
 import { useFeedbackStore } from "./feedback";
