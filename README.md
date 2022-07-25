@@ -10,7 +10,7 @@ Note: check if you already have a mysql instance running on default port if you 
 Scrpit SQL used to create table:
 CREATE TABLE user (id int NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, birthday DATE NOT NULL, PRIMARY KEY (id))
 
-################################################################################################################
+
 
 Como configurar:
 Se você não quiser configurar manualmente, basta executar o arquivo "setup.sh" na fonte do projeto. Mas se quiser, aqui vai um passo a passo simples:
