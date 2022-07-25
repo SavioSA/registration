@@ -1,3 +1,4 @@
+# registration-front
 How to setup:
 If you don't want to setup manually you just have to run the file "setup.sh" on project source.but if you do, here goes a simple walkthrough:
 Note: check if you already have a mysql instance running on default port if you do, change it in .env.example (this is for to setup script too).
