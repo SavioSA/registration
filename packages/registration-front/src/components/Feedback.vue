@@ -1,24 +1,20 @@
 <template>
   <v-alert
-    v-if="feedback.isActive"
+    v-if="feedbackInformations?.feedback?.isActive"
     class="feedback-alert"
-    :type="feedback.type"
-    >{{ feedback.message }}</v-alert
+    :type="feedbackInformations?.feedback?.type"
+    >{{ feedbackInformations?.feedback?.message }}</v-alert
   >
 </template>
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import { useFeedbackStore } from "../stores/feedback";
 export default defineComponent({
   name: "FeedBack",
-  components: {},
   setup() {
     const feedbackStore = useFeedbackStore();
-    const feedback = computed(() => {
-      return feedbackStore.getFeedback;
-    });
     return {
-      feedback,
+      feedbackStore,
     };
   },
 });

@@ -95,7 +95,7 @@ export default defineComponent({
           await usersStore.editCurrentUser(formData.value);
         } else {
           await usersStore.createUser(formData.value);
-          const { id } = usersStore.getCurrentUser;
+          const { id } = usersStore.currentUser;
           router.replace(`/users/${id}`);
         }
       }

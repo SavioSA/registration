@@ -1,10 +1,13 @@
 <template>
   <section class="list-section">
-    <UserEditorForm pageTitle="Editar Usuário" :userFormData="userFormData" />
+    <UserEditorForm
+      pageTitle="Editar Usuário"
+      :userFormData="userStore.currentUser"
+    />
   </section>
 </template>
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import { useRoute } from "vue-router";
 import UserEditorForm from "../components/UserEditorForm.vue";
 import { useUsersStore } from "../stores/users";
@@ -18,11 +21,9 @@ export default defineComponent({
     const id = parseInt(route.params.id as string);
     const userStore = useUsersStore();
     userStore.setCurrentUser(id);
-    const userFormData = computed(() => {
-      return userStore.getCurrentUser;
-    });
+
     return {
-      userFormData,
+      userStore,
     };
   },
 });
