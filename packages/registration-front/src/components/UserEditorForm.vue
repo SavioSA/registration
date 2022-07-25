@@ -53,11 +53,12 @@ export default defineComponent({
     const getAge = (dateString) => {
       const today = new Date();
       const birthDate = new Date(dateString);
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
+      const month = today.getMonth() - birthDate.getMonth();
+      const age =
+        month < 0 || (month === 0 && today.getDate() < birthDate.getDate())
+          ? today.getFullYear() - birthDate.getFullYear() - 1
+          : today.getFullYear() - birthDate.getFullYear();
+
       return age;
     };
 
